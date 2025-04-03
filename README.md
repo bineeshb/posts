@@ -1,6 +1,7 @@
 # Posts
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.11.
+This app uses [DummyJSON](https://dummyjson.com/) REST APIs.
 
 ## Development server
 
