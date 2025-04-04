@@ -19,6 +19,10 @@ export class AuthService {
       );
   }
 
+  logout(): void {
+    this.user = null;
+  }
+
   get userId(): number | null {
     return this.user?.id ?? null;
   }

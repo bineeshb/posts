@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -24,8 +23,7 @@ export class PostsComponent implements OnInit {
     private readonly authService: AuthService,
     private readonly postsService: PostsService,
     private readonly route: ActivatedRoute,
-    router: Router,
-    private readonly ngTitle: Title
+    router: Router
   ) {
     this.routeUrl = router.url;
   }
@@ -33,7 +31,6 @@ export class PostsComponent implements OnInit {
   ngOnInit(): void {
     const routeData = this.route.snapshot.data ?? null;
     this.title = routeData?.['title'] ?? 'Posts';
-    this.ngTitle.setTitle(this.title);
 
     if (routeData?.['showUserPosts'] && this.authService.userId) {
       this.fetchAndShowUserPosts(this.authService.userId);

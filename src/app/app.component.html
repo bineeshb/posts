@@ -6,7 +6,7 @@
   <a *ngIf="!authService.user; else loggedInUser" routerLink="login">Login</a>
   <ng-template #loggedInUser>
     &nbsp;&nbsp;<span>Hi {{ authService.user?.firstName }}!</span>&nbsp;&nbsp;
-    <button type="button">Logout</button>
+    <button type="button" (click)="logout()">Logout</button>
   </ng-template>
 </div>
 <router-outlet></router-outlet>

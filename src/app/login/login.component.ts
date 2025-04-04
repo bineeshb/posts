@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 
@@ -19,10 +18,8 @@ export class LoginComponent {
   constructor(
     private readonly authService: AuthService,
     fb: FormBuilder,
-    private readonly router: Router,
-    ngTitle: Title
+    private readonly router: Router
   ) {
-    ngTitle.setTitle('Login');
     this.loginForm = fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]

@@ -28,14 +28,13 @@ export class PostPageComponent implements OnDestroy, OnInit {
       filter(e => e instanceof NavigationEnd)
     ).subscribe(() => {
       const state = router.getCurrentNavigation()?.extras.state;
-      this.backPageTitle = state?.['backPageTitle'];
-      this.backLink = state?.['backLink'];
+      this.backPageTitle = state?.['backPageTitle'] ?? 'Posts';
+      this.backLink = state?.['backLink'] ?? '/';
     }));
   }
 
   ngOnInit(): void {
     const postId = Number(this.route.snapshot.paramMap.get('postId') ?? 0);
-    this.ngTitle.setTitle('Post');
 
     if (!isNaN(postId)) {
       this.subs$.push(this.postsService.getPost(postId).subscribe(postDetails => {
