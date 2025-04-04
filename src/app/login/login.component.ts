@@ -28,9 +28,13 @@ export class LoginComponent {
 
   loginUser(): void {
     const request = this.loginForm.getRawValue();
+    this.loginForm.disable();
     this.fetching = true;
     this.authService.login(request)
-      .pipe(finalize(() => (this.fetching = false)))
+      .pipe(finalize(() => {
+        this.loginForm.enable();
+        this.fetching = false;
+      }))
       .subscribe({
         next: () => {
           this.router.navigateByUrl('/my-posts');

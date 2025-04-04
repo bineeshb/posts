@@ -1,11 +1,11 @@
 <div>
   <ng-container *ngIf="authService.user">
-    <a routerLink="my-posts">My Posts</a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <a routerLink="/my-posts">My Posts</a>&nbsp;&nbsp;&nbsp;&nbsp;
   </ng-container>
-  <a routerLink="">Posts</a>&nbsp;&nbsp;&nbsp;&nbsp;
+  <a routerLink="/">Posts</a>&nbsp;&nbsp;&nbsp;&nbsp;
   <a *ngIf="!authService.user; else loggedInUser" routerLink="login">Login</a>
   <ng-template #loggedInUser>
-    &nbsp;&nbsp;<span>Hi {{ authService.user?.firstName }}!</span>&nbsp;&nbsp;
+    &nbsp;&nbsp;<span>Hi <a routerLink="/my-profile">{{ authService.user?.firstName }}</a>!</span>&nbsp;&nbsp;
     <button type="button" (click)="logout()">Logout</button>
   </ng-template>
 </div>

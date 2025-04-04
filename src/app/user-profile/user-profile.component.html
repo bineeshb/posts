@@ -1,0 +1,12 @@
+<br />
+<ng-container *ngIf="details; else loading">
+  <h2>{{ details.firstName }} {{ details.lastName }}</h2>
+  <h4>{{ details.role }}</h4>
+  <p>{{ details.email }}</p>
+  <p>{{ details.phone }}</p>
+  <p>{{ details.username }}</p>
+  <p>{{ details.address.country }}</p>
+</ng-container>
+<ng-template #loading>
+  <div>Loading ...</div>
+</ng-template>
