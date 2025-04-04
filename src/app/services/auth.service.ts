@@ -18,4 +18,8 @@ export class AuthService {
         tap(user => this.user = user)
       );
   }
+
+  get userId(): number | null {
+    return this.user?.id ?? null;
+  }
 }

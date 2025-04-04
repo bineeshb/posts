@@ -4,13 +4,17 @@ import { PostsComponent } from './posts/posts.component';
 import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [{
-  path: 'my-posts',
-  component: PostsComponent,
-  canActivate: [AuthGuard]
-},
-{
   path: 'login',
   loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
+},
+{
+  path: 'my-posts',
+  component: PostsComponent,
+  canActivate: [AuthGuard],
+  data: {
+    title: 'My Posts',
+    showUserPosts: true
+  }
 },
 {
   path: ':postId',

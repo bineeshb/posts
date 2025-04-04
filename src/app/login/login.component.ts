@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
+
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -16,10 +18,12 @@ export class LoginComponent {
 
   constructor(
     private readonly authService: AuthService,
-    private readonly fb: FormBuilder,
-    private readonly router: Router
+    fb: FormBuilder,
+    private readonly router: Router,
+    ngTitle: Title
   ) {
-    this.loginForm = this.fb.group({
+    ngTitle.setTitle('Login');
+    this.loginForm = fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
