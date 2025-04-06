@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { User } from '../interface';
 import { AuthService, UserService } from '../services';
@@ -9,10 +9,8 @@ import { AuthService, UserService } from '../services';
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss']
 })
-export class UserProfileComponent implements OnDestroy, OnInit {
-  private subs$: Subscription[] = [];
-
-  details: User | null = null;
+export class UserProfileComponent implements OnInit {
+  details$: Observable<User> | null = null;
 
   constructor(
     private readonly authService: AuthService,
@@ -20,15 +18,6 @@ export class UserProfileComponent implements OnDestroy, OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.subs$.push(this.userService.getUser(this.authService.userId as number).subscribe(userDetails => this.details = userDetails));
-  }
-
-  ngOnDestroy(): void {
-    this.subs$.forEach(sub => {
-      if (sub && !sub.closed) {
-        sub.unsubscribe();
-      }
-    });
-    this.subs$ = [];
+    this.details$ = this.userService.getUser(this.authService.userId as number);
   }
 }

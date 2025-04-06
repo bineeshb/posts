@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
-import { Post } from '../interface/post';
+import { PostsList } from '../interface/post';
 import { PostsService } from '../services/posts.service';
 import { AuthService } from '../services/auth.service';
 
@@ -12,12 +12,9 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./posts.component.scss']
 })
 export class PostsComponent implements OnInit {
-  private subs$: Subscription[] = [];
-
-  posts: Post[] = [];
+  postsList$: Observable<PostsList> | null = null;
   routeUrl = '';
   title = 'Posts';
-  totalPosts = 0;
 
   constructor(
     private readonly authService: AuthService,
@@ -31,34 +28,8 @@ export class PostsComponent implements OnInit {
   ngOnInit(): void {
     const routeData = this.route.snapshot.data ?? null;
     this.title = routeData?.['title'] ?? 'Posts';
-
-    if (routeData?.['showUserPosts'] && this.authService.userId) {
-      this.fetchAndShowUserPosts(this.authService.userId);
-    } else {
-      this.fetchAndShowAllPosts();
-    }
-  }
-
-  fetchAndShowUserPosts(userId: number): void {
-    this.subs$.push(this.postsService.getUserPosts(userId).subscribe(postsList => {
-      this.posts = postsList?.posts ?? [];
-      this.totalPosts = postsList?.total ?? 0;
-    }));
-  }
-
-  fetchAndShowAllPosts(): void {
-    this.subs$.push(this.postsService.getPosts().subscribe(postsList => {
-      this.posts = postsList?.posts ?? [];
-      this.totalPosts = postsList?.total ?? 0;
-    }));
-  }
-
-  ngOnDestroy(): void {
-    this.subs$.forEach(sub => {
-      if (sub && !sub.closed) {
-        sub.unsubscribe();
-      }
-    });
-    this.subs$ = [];
+    this.postsList$ = (routeData?.['showUserPosts'] && this.authService.userId)
+      ? this.postsService.getUserPosts(this.authService.userId)
+      : this.postsService.getPosts();
   }
 }
