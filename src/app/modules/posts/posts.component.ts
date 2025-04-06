@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { PostsList } from '../interface/post';
-import { PostsService } from '../services/posts.service';
-import { AuthService } from '../services/auth.service';
+import { PostsList } from 'app/interfaces';
+import { AuthService, PostsService } from 'app/services';
 
 @Component({
   selector: 'app-posts',

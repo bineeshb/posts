@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule, Routes } from '@angular/router';
 
 import { PostPageComponent } from './post-page.component';
-import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [{
   path: '',

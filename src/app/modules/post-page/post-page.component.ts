@@ -3,8 +3,8 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { filter, Subscription } from 'rxjs';
 
-import { PostsService } from '../services/posts.service';
-import { Post } from '../interface/post';
+import { Post } from 'app/interfaces';
+import { PostsService } from 'app/services';
 
 @Component({
   selector: 'app-post-page',

@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PostsComponent } from './posts/posts.component';
-import { AuthGuard } from './services/auth.guard';
+
+import { AuthGuard } from 'app/services';
 
 const routes: Routes = [{
   path: 'login',
-  loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
+  loadChildren: () => import('app/modules/login/login.module').then(m => m.LoginModule),
   data: {
     title: 'Login'
   }
 },
 {
   path: 'my-profile',
-  loadChildren: () => import('./user-profile/user-profile.module').then(m => m.UserProfileModule),
+  loadChildren: () => import('app/modules/user-profile/user-profile.module').then(m => m.UserProfileModule),
   canActivate: [AuthGuard],
   data: {
     title: 'My Profile'
@@ -20,7 +20,7 @@ const routes: Routes = [{
 },
 {
   path: 'my-posts',
-  component: PostsComponent,
+  loadChildren: () => import('app/modules/posts/posts.module').then(m => m.PostsModule),
   canActivate: [AuthGuard],
   data: {
     title: 'My Posts',
@@ -29,14 +29,14 @@ const routes: Routes = [{
 },
 {
   path: ':postId',
-  loadChildren: () => import('./post-page/post-page.module').then(m => m.PostPageModule),
+  loadChildren: () => import('app/modules/post-page/post-page.module').then(m => m.PostPageModule),
   data: {
     title: 'Post'
   }
 },
 {
   path: '',
-  component: PostsComponent,
+  loadChildren: () => import('app/modules/posts/posts.module').then(m => m.PostsModule),
   data: {
     title: 'Posts'
   }
