@@ -10,13 +10,5 @@ export interface User {
   password: string;
   birthDate: string;
   image: string;
-  address: {
-    address: string;
-    city: string;
-    state: string;
-    stateCode: string;
-    postalCode: string;
-    country: string;
-  },
   role: string;
 }

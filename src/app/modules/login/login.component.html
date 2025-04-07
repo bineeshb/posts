@@ -1,6 +1,8 @@
 <br>
 <br>
 <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+  <div *ngIf="errorMessage">{{ errorMessage }}</div>
+  <br>
   <div>
     <label>
       Username:&nbsp;
@@ -14,8 +16,6 @@
       <input type="password" formControlName="password" />
     </label>
   </div>
-  <br>
-  <div *ngIf="errorMessage">{{ errorMessage }}</div>
   <br>
   <button type="submit" [disabled]="!loginForm.valid || fetching">{{ fetching ? 'Validating...' : 'Login' }}</button>
 </form>

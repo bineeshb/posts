@@ -1,12 +1,83 @@
 <br />
-<ng-container *ngIf="details$ | async as details; else loading">
-  <h2>{{ details.firstName }} {{ details.lastName }}</h2>
-  <h4>{{ details.role }}</h4>
-  <p>{{ details.email }}</p>
-  <p>{{ details.phone }}</p>
-  <p>{{ details.username }}</p>
-  <p>{{ details.address.country }}</p>
+<ng-container *ngIf="showEditForm; else viewDetails">
+  <form [formGroup]="detailsForm" (ngSubmit)="saveDetails()">
+    <div>
+      <label>
+        Name:&nbsp;
+        <input type="text" formControlName="firstName" placeholder="First name" />&nbsp;&nbsp;
+        <input type="text" formControlName="lastName" placeholder="Last name" />
+      </label>
+    </div>
+    <br>
+    <div>
+      <label>
+        Gender:&nbsp;
+        <input id="option-male" type="radio" name="gender" value="male" formControlName="gender" />&nbsp;
+        <label for="option-male">Male</label>&nbsp;&nbsp;
+        <input id="option-female" type="radio" name="gender" value="female" formControlName="gender" />&nbsp;
+        <label for="option-female">Female</label>
+      </label>
+    </div>
+    <br>
+    <div>
+      <label>
+        Age:&nbsp;
+        <input type="number" formControlName="age" />
+      </label>
+    </div>
+    <br>
+    <div>
+      <label>
+        Birth Date:&nbsp;
+        <input type="date" formControlName="birthDate" >
+      </label>
+    </div>
+    <br>
+    <div>
+      <label>
+        Email:&nbsp;
+        <input type="email" formControlName="email" />
+      </label>
+    </div>
+    <br>
+    <div>
+      <label>
+        Phone:&nbsp;
+        <input type="tel" formControlName="phone" />
+      </label>
+    </div>
+    <br>
+    <div>
+      <label>
+        Username:&nbsp;
+        <input type="text" formControlName="username" />
+      </label>
+    </div>
+    <br>
+    <div>
+      <label>
+        Password:&nbsp;
+        <input type="text" formControlName="password" />
+      </label>
+    </div>
+    <br>
+    <button type="button" (click)="cancelEdit()">Cancel</button>&nbsp;&nbsp;
+    <button type="submit" [disabled]="!detailsForm.valid || saving">{{ saving ? 'Saving...' : 'Save' }}</button>
+  </form>
 </ng-container>
+<ng-template #viewDetails>
+  <ng-container *ngIf="details; else loading">
+    <h2>{{ details.firstName }} {{ details.lastName }}</h2>
+    <h4>{{ details.role }}</h4>
+    <p>{{ details.gender }}, {{ details.age }}</p>
+    <p>{{ details.birthDate }}</p>
+    <p>{{ details.email }}</p>
+    <p>{{ details.phone }}</p>
+    <p>{{ details.username }}</p>
+    <br />
+    <button type="button" (click)="editDetails()">Edit</button>
+  </ng-container>
+</ng-template>
 <ng-template #loading>
   <div>Loading ...</div>
 </ng-template>
