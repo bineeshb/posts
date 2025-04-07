@@ -4,6 +4,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map, Subscription } from 'rxjs';
 
 import { AuthService } from './services/auth.service';
+import { AppService } from './app.service';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ export class AppComponent implements OnDestroy {
   title = 'posts';
 
   constructor(
+    public appService: AppService,
     public authService: AuthService,
     private readonly route: ActivatedRoute,
     private readonly router: Router,

@@ -10,3 +10,8 @@
   </ng-template>
 </div>
 <router-outlet></router-outlet>
+<ng-container *ngIf="appService.loading$ | async">
+  <div class="loader">
+    <p>Loading...</p>
+  </div>
+</ng-container>

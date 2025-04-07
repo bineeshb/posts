@@ -66,7 +66,7 @@
   </form>
 </ng-container>
 <ng-template #viewDetails>
-  <ng-container *ngIf="details; else loading">
+  <ng-container *ngIf="details; else noDetails">
     <h2>{{ details.firstName }} {{ details.lastName }}</h2>
     <h4>{{ details.role }}</h4>
     <p>{{ details.gender }}, {{ details.age }}</p>
@@ -78,6 +78,6 @@
     <button type="button" (click)="editDetails()">Edit</button>
   </ng-container>
 </ng-template>
-<ng-template #loading>
-  <div>Loading ...</div>
+<ng-template #noDetails>
+  <div>No details found</div>
 </ng-template>
