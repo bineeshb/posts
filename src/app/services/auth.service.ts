@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 
 import { LoginUser, LoggedInUser } from 'app/interfaces';
+import { getAPIContext } from 'app/interceptors';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class AuthService {
   constructor(private readonly http: HttpClient) { }
 
   login(request: LoginUser): Observable<LoggedInUser> {
-    return this.http.post<LoggedInUser>(`${this.api}/login`, request)
+    return this.http.post<LoggedInUser>(`${this.api}/login`, request, { context: getAPIContext('Error while login', false) })
       .pipe(
         tap(user => this.user = user)
       );

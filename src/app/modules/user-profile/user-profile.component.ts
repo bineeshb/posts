@@ -37,10 +37,8 @@ export class UserProfileComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    this.subs$.push(this.userService.getUser(this.authService.userId as number).subscribe({
-      next: details => this.details = details,
-      error: error => console.error('Error while getting user details', error)
-    }));
+    this.subs$.push(this.userService.getUser(this.authService.userId as number)
+        .subscribe(details => this.details = details));
   }
 
   editDetails(): void {
@@ -72,12 +70,9 @@ export class UserProfileComponent implements OnDestroy, OnInit {
         this.detailsForm.enable();
         this.saving = false;
       }))
-      .subscribe({
-        next: updatedDetails => {
-          this.details = { ...updatedDetails, ...formValues };
-          this.showEditForm = false;
-        },
-        error: error => console.error('Error while saving user details', error)
+      .subscribe(updatedDetails => {
+        this.details = { ...updatedDetails, ...formValues };
+        this.showEditForm = false;
       }));
   }
 

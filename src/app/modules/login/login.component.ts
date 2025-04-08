@@ -39,7 +39,7 @@ export class LoginComponent {
         next: () => {
           this.router.navigateByUrl('/my-posts');
         },
-        error: error => this.errorMessage = error?.error?.message ?? error?.statusText ?? 'Error while login'
+        error: (error: Error) => this.errorMessage = error.message
       });
   }
 }
