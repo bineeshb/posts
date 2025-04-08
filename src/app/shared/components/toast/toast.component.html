@@ -1,0 +1,7 @@
+<div class="wrapper" [class.error]="type === 'error'">
+  <span class="icon">
+    <ng-container *ngIf="type === 'error'; else defaultIcon">&times;</ng-container>
+    <ng-template #defaultIcon>&check;</ng-template>
+  </span>&nbsp;
+  {{ message }}
+</div>

@@ -9,10 +9,10 @@
     <button type="button" (click)="logout()">Logout</button>
   </ng-template>
 </div>
-<ng-container *ngIf="appService.error$ | async as error">
-  <div>{{ error }}</div>
-</ng-container>
 <router-outlet></router-outlet>
+<ng-container *ngIf="appService.error$ | async as error">
+  <app-toast [message]="error" type="error"></app-toast>
+</ng-container>
 <ng-container *ngIf="appService.loading$ | async">
   <div class="loader">
     <p>Loading...</p>
