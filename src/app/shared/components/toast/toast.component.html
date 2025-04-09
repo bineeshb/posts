@@ -1,7 +1,8 @@
-<div class="wrapper" [class.error]="type === 'error'">
+<div *ngIf="message" class="wrapper" [class.error]="type === 'error'">
   <span class="icon">
-    <ng-container *ngIf="type === 'error'; else defaultIcon">&times;</ng-container>
+    <ng-container *ngIf="type === 'error'; else defaultIcon">!</ng-container>
     <ng-template #defaultIcon>&check;</ng-template>
   </span>&nbsp;
   {{ message }}
+  <button type="button" class="btn-close" (click)="close()">&times;</button>
 </div>

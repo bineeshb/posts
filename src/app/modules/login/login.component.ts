@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs';
+import { finalize, take } from 'rxjs';
 
 import { AuthService } from 'app/services';
 
@@ -31,10 +31,13 @@ export class LoginComponent {
     this.loginForm.disable();
     this.fetching = true;
     this.authService.login(request)
-      .pipe(finalize(() => {
-        this.loginForm.enable();
-        this.fetching = false;
-      }))
+      .pipe(
+        finalize(() => {
+          this.loginForm.enable();
+          this.fetching = false;
+        }),
+        take(1)
+      )
       .subscribe({
         next: () => {
           this.router.navigateByUrl('/my-posts');

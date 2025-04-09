@@ -1,8 +1,9 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter, map, Subscription } from 'rxjs';
+import { filter, map, takeUntil } from 'rxjs';
 
+import { Unsub } from './models/unsub.model';
 import { AuthService } from './services/auth.service';
 import { AppService } from './app.service';
 
@@ -11,9 +12,7 @@ import { AppService } from './app.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnDestroy {
-  private route$: Subscription | null = null;
-
+export class AppComponent extends Unsub {
   title = 'posts';
 
   constructor(
@@ -22,16 +21,19 @@ export class AppComponent implements OnDestroy {
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly ngTitle: Title
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
-    this.route$ = this.router.events.pipe(
+    this.router.events.pipe(
       filter(e => e instanceof NavigationEnd),
       map(() => {
         const child: ActivatedRoute | null = this.route.firstChild;
         return child?.snapshot?.data?.['title'] ?? null;
       }),
-      filter(title => !!title)
+      filter(title => !!title),
+      takeUntil(this.unsubscribe$)
     ).subscribe(title => {
       this.ngTitle.setTitle(title);
     });
@@ -40,12 +42,5 @@ export class AppComponent implements OnDestroy {
   logout(): void {
     this.authService.logout();
     this.router.navigateByUrl('/');
-  }
-
-  ngOnDestroy(): void {
-    if (this.route$ && !this.route$.closed) {
-      this.route$.unsubscribe();
-    }
-    this.route$ = null;
   }
 }

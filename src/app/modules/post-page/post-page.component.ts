@@ -1,9 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { filter, Subscription } from 'rxjs';
+import { filter, take, takeUntil } from 'rxjs';
 
 import { Post } from 'app/interfaces';
+import { Unsub } from 'app/models/unsub.model';
 import { PostsService } from 'app/services';
 
 @Component({
@@ -11,9 +12,7 @@ import { PostsService } from 'app/services';
   templateUrl: './post-page.component.html',
   styleUrls: ['./post-page.component.scss']
 })
-export class PostPageComponent implements OnDestroy, OnInit {
-  private subs$: Subscription[] = [];
-
+export class PostPageComponent extends Unsub implements OnInit {
   details: Post | null = null;
   backPageTitle = 'Posts';
   backLink = ''
@@ -24,32 +23,25 @@ export class PostPageComponent implements OnDestroy, OnInit {
     router: Router,
     private readonly ngTitle: Title
   ) {
-    this.subs$.push(router.events.pipe(
-      filter(e => e instanceof NavigationEnd)
+    super();
+    router.events.pipe(
+      filter(e => e instanceof NavigationEnd),
+      takeUntil(this.unsubscribe$)
     ).subscribe(() => {
       const state = router.getCurrentNavigation()?.extras.state;
       this.backPageTitle = state?.['backPageTitle'] ?? 'Posts';
       this.backLink = state?.['backLink'] ?? '/';
-    }));
+    });
   }
 
   ngOnInit(): void {
     const postId = Number(this.route.snapshot.paramMap.get('postId') ?? 0);
 
     if (!isNaN(postId)) {
-      this.subs$.push(this.postsService.getPost(postId).subscribe(postDetails => {
+      this.postsService.getPost(postId).pipe(take(1)).subscribe(postDetails => {
         this.details = postDetails;
         this.ngTitle.setTitle(postDetails.title);
-      }));
+      });
     }
-  }
-
-  ngOnDestroy(): void {
-    this.subs$.forEach(sub => {
-      if (sub && !sub.closed) {
-        sub.unsubscribe();
-      }
-    });
-    this.subs$ = [];
   }
 }

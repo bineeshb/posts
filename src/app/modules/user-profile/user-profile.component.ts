@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { finalize, Subscription } from 'rxjs';
+import { finalize, take } from 'rxjs';
 
 import { User } from 'app/interfaces';
 import { AuthService, UserService } from 'app/services';
@@ -10,9 +10,7 @@ import { AuthService, UserService } from 'app/services';
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss']
 })
-export class UserProfileComponent implements OnDestroy, OnInit {
-  private subs$: Subscription[] = [];
-
+export class UserProfileComponent implements OnInit {
   details: User | null = null;
   detailsForm: FormGroup;
   saving = false;
@@ -37,8 +35,8 @@ export class UserProfileComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    this.subs$.push(this.userService.getUser(this.authService.userId as number)
-        .subscribe(details => this.details = details));
+    this.userService.getUser(this.authService.userId as number).pipe(take(1))
+      .subscribe(details => this.details = details);
   }
 
   editDetails(): void {
@@ -65,23 +63,17 @@ export class UserProfileComponent implements OnDestroy, OnInit {
     const formValues = this.detailsForm.getRawValue();
     this.detailsForm.disable();
     this.saving = true;
-    this.subs$.push(this.userService.updateUser(this.authService.userId as number, formValues)
-      .pipe(finalize(() => {
-        this.detailsForm.enable();
-        this.saving = false;
-      }))
+    this.userService.updateUser(this.authService.userId as number, formValues)
+      .pipe(
+        finalize(() => {
+          this.detailsForm.enable();
+          this.saving = false;
+        }),
+        take(1)
+      )
       .subscribe(updatedDetails => {
         this.details = { ...updatedDetails, ...formValues };
         this.showEditForm = false;
-      }));
-  }
-
-  ngOnDestroy(): void {
-    this.subs$.forEach(sub => {
-      if (sub && !sub.closed) {
-        sub.unsubscribe();
-      }
-    });
-    this.subs$ = [];
+      });
   }
 }

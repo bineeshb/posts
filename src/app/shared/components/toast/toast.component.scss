@@ -1,26 +1,46 @@
+$bg-error: rgba(255, 0, 0, 0.1);
+$color-error: red;
+$bg-success: rgba(0, 255, 0, 0.1);
+$color-success: green;
+
 .wrapper {
   position: fixed;
   top: 50px;
   left: 50%;
-  padding: 10px 15px;
+  transform: translate(-50%, 0);
+  display: flex;
+  align-items: center;
   white-space: nowrap;
-  background-color: rgba(0, 255, 0, 0.1);
-  border: 1px solid green;
+  background-color: $bg-success;
+  border: 1px solid $color-success;
   border-radius: 5px;
 
   .icon {
+    display: inline-block;
+    padding: 5px;
+    min-width: 20px;
+    background-color: $color-success;
+    text-align: center;
     font-size: 24px;
     font-weight: bold;
-    line-height: 0;
-    color: green;
+    color: white;
   }
 
   &.error {
-    background-color: rgba(255, 0, 0, 0.1);
-    border-color: red;
+    background-color: $bg-error;
+    border-color: $color-error;
 
     .icon {
-      color: red;
+      background-color: $color-error;
     }
+  }
+
+  .btn-close {
+    display: inline-block;
+    margin: 0 5px 0 10px;
+    padding: 2px;
+    background: none;
+    border: 0 none;
+    font-size: 24px;
   }
 }
