@@ -6,40 +6,32 @@ import { AuthGuard } from 'app/services';
 const routes: Routes = [{
   path: 'login',
   loadChildren: () => import('app/modules/login/login.module').then(m => m.LoginModule),
-  data: {
-    title: 'Login'
-  }
+  title: 'Login'
 },
 {
   path: 'my-profile',
   loadChildren: () => import('app/modules/user-profile/user-profile.module').then(m => m.UserProfileModule),
   canActivate: [AuthGuard],
-  data: {
-    title: 'My Profile'
-  }
+  title: 'My Profile'
 },
 {
   path: 'my-posts',
   loadChildren: () => import('app/modules/posts/posts.module').then(m => m.PostsModule),
   canActivate: [AuthGuard],
+  title: 'My Posts',
   data: {
-    title: 'My Posts',
     showUserPosts: true
   }
 },
 {
   path: ':postId',
   loadChildren: () => import('app/modules/post-page/post-page.module').then(m => m.PostPageModule),
-  data: {
-    title: 'Post'
-  }
+  title: 'Post'
 },
 {
   path: '',
   loadChildren: () => import('app/modules/posts/posts.module').then(m => m.PostsModule),
-  data: {
-    title: 'Posts'
-  }
+  title: 'Posts'
 },
 {
   path: '**', redirectTo: '', pathMatch: 'full'
