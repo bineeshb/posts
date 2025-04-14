@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter, map, takeUntil } from 'rxjs';
+import { Router } from '@angular/router';
 
-import { Unsub } from './models/unsub.model';
 import { AuthService } from './services/auth.service';
 import { AppService } from './app.service';
 
@@ -12,32 +9,13 @@ import { AppService } from './app.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent extends Unsub {
-  title = 'posts';
+export class AppComponent {
 
   constructor(
     public appService: AppService,
     public authService: AuthService,
-    private readonly route: ActivatedRoute,
-    private readonly router: Router,
-    private readonly ngTitle: Title
-  ) {
-    super();
-  }
-
-  ngOnInit(): void {
-    this.router.events.pipe(
-      filter(e => e instanceof NavigationEnd),
-      map(() => {
-        const child: ActivatedRoute | null = this.route.firstChild;
-        return child?.snapshot?.data?.['title'] ?? null;
-      }),
-      filter(title => !!title),
-      takeUntil(this.unsubscribe$)
-    ).subscribe(title => {
-      this.ngTitle.setTitle(title);
-    });
-  }
+    private readonly router: Router
+  ) { }
 
   logout(): void {
     this.authService.logout();
