@@ -1,13 +1,17 @@
+import { NgIf, AsyncPipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
 import { AuthService } from './services/auth.service';
+import { ToastComponent } from './shared/components/toast/toast.component';
 import { AppService } from './app.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: true,
+    imports: [NgIf, RouterLink, RouterOutlet, AsyncPipe, ToastComponent]
 })
 export class AppComponent {
 

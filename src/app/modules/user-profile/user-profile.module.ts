@@ -11,13 +11,11 @@ const routes: Routes = [{
 }];
 
 @NgModule({
-  declarations: [
-    UserProfileComponent
-  ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule.forChild(routes)
-  ]
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        RouterModule.forChild(routes),
+        UserProfileComponent
+    ]
 })
 export class UserProfileModule { }
