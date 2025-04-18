@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { User } from 'app/interfaces';
@@ -10,8 +10,7 @@ import { getAPIContext } from 'app/interceptors';
 })
 export class UserService {
   private readonly apiUrl = 'https://dummyjson.com/users';
-
-  constructor(private readonly http: HttpClient) { }
+  private readonly http = inject(HttpClient);
 
   getUser(userId: number): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}/${userId}`, {

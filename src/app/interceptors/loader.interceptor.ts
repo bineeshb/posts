@@ -1,44 +1,36 @@
-import { Injectable } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor,
-  HttpResponse
-} from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { inject } from '@angular/core';
+import { HttpRequest, HttpResponse, HttpInterceptorFn } from '@angular/common/http';
+import { tap } from 'rxjs';
 
 import { AppService } from 'app/app.service';
 
-@Injectable()
-export class LoaderInterceptor implements HttpInterceptor {
-  private readonly requests: HttpRequest<any>[] = [];
+const requests: HttpRequest<any>[] = [];
 
-  constructor(private readonly appService: AppService) {}
-
-  private removeRequest(req: HttpRequest<any>): void {
-    const i = this.requests.indexOf(req);
+export const loaderInterceptor: HttpInterceptorFn = (request, next) => {
+  const appService = inject(AppService);
+  const removeRequest = (): void => {
+    const i = requests.indexOf(request);
 
     if (i >= 0) {
-      this.requests.splice(i, 1);
+      requests.splice(i, 1);
     }
 
-    this.appService.toggleLoader(this.requests.length > 0);
-  }
+    appService.toggleLoader(requests.length > 0);
+  };
 
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    this.requests.push(request);
-    this.appService.showLoader();
+  requests.push(request);
+  appService.showLoader();
 
-    return next.handle(request).pipe(tap({
+  return next(request).pipe(
+    tap({
       next: res => {
         if (res instanceof HttpResponse) {
-          this.removeRequest(request);
+          removeRequest();
         }
       },
       error: () => {
-        this.removeRequest(request);
+        removeRequest();
       }
-    }));
-  }
-}
+    })
+  );
+};

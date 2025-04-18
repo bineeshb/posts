@@ -5,18 +5,18 @@ import { AuthGuard } from 'app/services';
 
 const routes: Routes = [{
   path: 'login',
-  loadChildren: () => import('app/modules/login/login.module').then(m => m.LoginModule),
+  loadComponent: () => import('app/modules/login/login.component').then(m => m.LoginComponent),
   title: 'Login'
 },
 {
   path: 'my-profile',
-  loadChildren: () => import('app/modules/user-profile/user-profile.module').then(m => m.UserProfileModule),
+  loadComponent: () => import('app/modules/user-profile/user-profile.component').then(m => m.UserProfileComponent),
   canActivate: [AuthGuard],
   title: 'My Profile'
 },
 {
   path: 'my-posts',
-  loadChildren: () => import('app/modules/posts/posts.module').then(m => m.PostsModule),
+  loadComponent: () => import('app/modules/posts/posts.component').then(m => m.PostsComponent),
   canActivate: [AuthGuard],
   title: 'My Posts',
   data: {
@@ -25,12 +25,12 @@ const routes: Routes = [{
 },
 {
   path: ':postId',
-  loadChildren: () => import('app/modules/post-page/post-page.module').then(m => m.PostPageModule),
+  loadComponent: () => import('app/modules/post-page/post-page.component').then(m => m.PostPageComponent),
   title: 'Post'
 },
 {
   path: '',
-  loadChildren: () => import('app/modules/posts/posts.module').then(m => m.PostsModule),
+  loadComponent: () => import('app/modules/posts/posts.component').then(m => m.PostsComponent),
   title: 'Posts'
 },
 {

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { Post, PostsList } from 'app/interfaces';
@@ -9,10 +9,8 @@ import { getAPIContext } from 'app/interceptors';
   providedIn: 'root'
 })
 export class PostsService {
-
   private readonly api = 'https://dummyjson.com/posts';
-
-  constructor(private readonly http: HttpClient) { }
+  private readonly http = inject(HttpClient);
 
   getPosts(): Observable<PostsList> {
     return this.http.get<PostsList>(this.api, {

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 
 import { LoginUser, LoggedInUser } from 'app/interfaces';
@@ -10,9 +10,8 @@ import { getAPIContext } from 'app/interceptors';
 })
 export class AuthService {
   private readonly api = 'https://dummyjson.com/auth';
+  private readonly http = inject(HttpClient);
   user: LoggedInUser | null = null;
-
-  constructor(private readonly http: HttpClient) { }
 
   login(request: LoginUser): Observable<LoggedInUser> {
     return this.http.post<LoggedInUser>(`${this.api}/login`, request, { context: getAPIContext('Error while login', false) })

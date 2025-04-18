@@ -1,16 +1,14 @@
-import { Injectable } from '@angular/core';
+import { inject } from '@angular/core';
 import {
   HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor,
   HttpErrorResponse,
   HttpContextToken,
   HttpContext,
-  HttpResponse
+  HttpResponse,
+  HttpInterceptorFn
 } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { catchError, Observable, of, tap, throwError } from 'rxjs';
+import { catchError, of, tap, throwError } from 'rxjs';
 
 import { AppService } from 'app/app.service';
 
@@ -32,58 +30,52 @@ export const getAPIContext = (defaultErrorMessage: string, showAppErrorToast?: b
   return apiContext;
 };
 
-@Injectable()
-export class APIErrorInterceptor implements HttpInterceptor {
-  private requestCount = 0;
+let requestCount = 0;
 
-  constructor(
-    private readonly appService: AppService,
-    private readonly router: Router
-  ) {}
+const reduceRequestCount = () => {
+  requestCount = requestCount > 0 ? (requestCount - 1) : 0;
+};
 
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const ignoreStatuses = request.context.get(IGNORE_STATUSES);
-    this.requestCount += 1;
-
-    if (this.requestCount === 1) {
-      this.appService.clearError();
-    }
-
-    return next.handle(request).pipe(
-      catchError((error: HttpErrorResponse) => {
-        if (error?.status && Array.isArray(ignoreStatuses) && ignoreStatuses.includes(error.status)) {
-          return of(new HttpResponse());
-        }
-
-        const apiError = new Error(this.getErrorMessage(error, request));
-        apiError.name = 'APIError';
-
-        if (request.context.get(SHOW_APP_ERROR_TOAST)) {
-          this.appService.showError(apiError.message);
-        }
-
-        if (error?.status === 401) {
-          this.router.navigate(['/login']);
-        }
-
-        this.reduceRequestCount();
-        return throwError(() => apiError);
-      }),
-      tap(() => this.reduceRequestCount())
-    );
+const getErrorMessage = (error: HttpErrorResponse, request: HttpRequest<unknown>): string => {
+  if (!error) {
+    return request.context.get(DEFAULT_ERROR_MESSAGE);
+  } else if (error.error?.message && typeof error.error.message === 'string') {
+    return error.error.message;
   }
 
-  private reduceRequestCount(): void {
-    this.requestCount = this.requestCount > 0 ? (this.requestCount - 1) : 0;
+  return error.statusText;
+};
+
+export const apiErrorInterceptor: HttpInterceptorFn = (request, next) => {
+  const appService = inject(AppService);
+  const router = inject(Router);
+  const ignoreStatuses = request.context.get(IGNORE_STATUSES);
+  requestCount += 1;
+
+  if (requestCount === 1) {
+    appService.clearError();
   }
 
-  private getErrorMessage(error: HttpErrorResponse, request: HttpRequest<unknown>): string {
-    if (!error) {
-      return request.context.get(DEFAULT_ERROR_MESSAGE);
-    } else if (error.error?.message && typeof error.error.message === 'string') {
-      return error.error.message;
-    }
+  return next(request).pipe(
+    catchError((error: HttpErrorResponse) => {
+      if (error?.status && Array.isArray(ignoreStatuses) && ignoreStatuses.includes(error.status)) {
+        return of(new HttpResponse());
+      }
 
-    return error.statusText;
-  }
-}
+      const apiError = new Error(getErrorMessage(error, request));
+      apiError.name = 'APIError';
+
+      if (request.context.get(SHOW_APP_ERROR_TOAST)) {
+        appService.showError(apiError.message);
+      }
+
+      if (error?.status === 401) {
+        router.navigate(['/login']);
+      }
+
+      reduceRequestCount();
+      return throwError(() => apiError);
+    }),
+    tap(() => reduceRequestCount())
+  );
+};
