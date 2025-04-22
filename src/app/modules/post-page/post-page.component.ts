@@ -1,6 +1,6 @@
 import { NgIf, NgFor } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { filter, take, takeUntil } from 'rxjs';
 
@@ -16,13 +16,14 @@ import { PostsService } from 'app/services';
     imports: [RouterLink, NgIf, NgFor]
 })
 export class PostPageComponent extends Unsub implements OnInit {
+  @Input() postId?: string;
+
   details: Post | null = null;
   backPageTitle = 'Posts';
   backLink = ''
 
   constructor(
     private readonly postsService: PostsService,
-    private readonly route: ActivatedRoute,
     router: Router,
     private readonly ngTitle: Title
   ) {
@@ -38,7 +39,7 @@ export class PostPageComponent extends Unsub implements OnInit {
   }
 
   ngOnInit(): void {
-    const postId = Number(this.route.snapshot.paramMap.get('postId') ?? 0);
+    const postId = Number(this.postId ?? 0);
 
     if (!isNaN(postId)) {
       this.postsService.getPost(postId).pipe(take(1)).subscribe(postDetails => {
