@@ -1,4 +1,4 @@
-import { NgIf, NgFor } from '@angular/common';
+
 import { Component, Input, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -9,11 +9,11 @@ import { Unsub } from 'app/models/unsub.model';
 import { PostsService } from 'app/services';
 
 @Component({
-    selector: 'app-post-page',
-    templateUrl: './post-page.component.html',
-    styleUrls: ['./post-page.component.scss'],
-    standalone: true,
-    imports: [RouterLink, NgIf, NgFor]
+  selector: 'app-post-page',
+  templateUrl: './post-page.component.html',
+  styleUrls: ['./post-page.component.scss'],
+  standalone: true,
+  imports: [RouterLink]
 })
 export class PostPageComponent extends Unsub implements OnInit {
   @Input() postId?: string;

@@ -1,17 +1,18 @@
 <br />
 <a [routerLink]="[backLink]">&lt; Back to {{ backPageTitle }}</a>
-<ng-container *ngIf="details; else postNotFound">
+@if (details) {
   <h2>{{ details.title }}</h2>
   <p><em>by {{ details.userId }}</em></p>
   <p>{{ details.body }}</p>
-  <p *ngIf="details.tags.length">
-    Tags:
-    <ng-container *ngFor="let tag of details.tags; last as isLast">
-      {{ tag }}<ng-container *ngIf="!isLast">,</ng-container>
-    </ng-container>
-  </p>
+  @if (details.tags.length) {
+    <p>
+      Tags:
+      @for (tag of details.tags; track tag; let isLast = $last) {
+        {{ tag }}@if (!isLast) {,}
+      }
+    </p>
+  }
   <p><em>{{ details.views }} views - {{ details.reactions.likes }} likes - {{ details.reactions.dislikes }} dislikes</em></p>
-</ng-container>
-<ng-template #postNotFound>
+} @else {
   <div>This post is not available</div>
-</ng-template>
+}

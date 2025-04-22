@@ -1,13 +1,11 @@
-import { NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { asyncScheduler, Subscription } from 'rxjs';
 
 @Component({
-    selector: 'app-toast',
-    templateUrl: './toast.component.html',
-    styleUrls: ['./toast.component.scss'],
-    standalone: true,
-    imports: [NgIf]
+  selector: 'app-toast',
+  templateUrl: './toast.component.html',
+  styleUrls: ['./toast.component.scss'],
+  standalone: true
 })
 export class ToastComponent implements OnInit {
   @Input() message: string | null = null;
