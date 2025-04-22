@@ -107,7 +107,6 @@
       }
     }
   },
-  "defaultProject": "posts",
   "cli": {
     "analytics": false,
     "packageManager": "pnpm"
