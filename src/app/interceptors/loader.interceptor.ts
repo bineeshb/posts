@@ -5,18 +5,18 @@ import { tap } from 'rxjs';
 import { AppService } from 'app/app.service';
 
 const requests: HttpRequest<any>[] = [];
+const removeRequest = (req: HttpRequest<any>, appService: AppService): void => {
+  const i = requests.indexOf(req);
+
+  if (i >= 0) {
+    requests.splice(i, 1);
+  }
+
+  appService.toggleLoader(requests.length > 0);
+};
 
 export const loaderInterceptor: HttpInterceptorFn = (request, next) => {
   const appService = inject(AppService);
-  const removeRequest = (): void => {
-    const i = requests.indexOf(request);
-
-    if (i >= 0) {
-      requests.splice(i, 1);
-    }
-
-    appService.toggleLoader(requests.length > 0);
-  };
 
   requests.push(request);
   appService.showLoader();
@@ -25,11 +25,11 @@ export const loaderInterceptor: HttpInterceptorFn = (request, next) => {
     tap({
       next: res => {
         if (res instanceof HttpResponse) {
-          removeRequest();
+          removeRequest(request, appService);
         }
       },
       error: () => {
-        removeRequest();
+        removeRequest(request, appService);
       }
     })
   );
