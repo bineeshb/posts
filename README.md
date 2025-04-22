@@ -1,6 +1,6 @@
 # Posts
 
-This project uses [Angular CLI](https://github.com/angular/angular-cli) version 14 and [DummyJSON](https://dummyjson.com/) REST APIs.
+This project uses [Angular CLI](https://github.com/angular/angular-cli) version 15 and [DummyJSON](https://dummyjson.com/) REST APIs.
 
 ## Development server
 
