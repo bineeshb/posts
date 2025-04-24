@@ -1,20 +1,21 @@
 <div>
-  <ng-container *ngIf="authService.user">
+  @if (authService.user) {
     <a routerLink="/my-posts">My Posts</a>&nbsp;&nbsp;&nbsp;&nbsp;
-  </ng-container>
+  }
   <a routerLink="/">Posts</a>&nbsp;&nbsp;&nbsp;&nbsp;
-  <a *ngIf="!authService.user; else loggedInUser" routerLink="login">Login</a>
-  <ng-template #loggedInUser>
-    &nbsp;&nbsp;<span>Hi <a routerLink="/my-profile">{{ authService.user?.firstName }}</a>!</span>&nbsp;&nbsp;
+  @if (!authService.user) {
+    <a routerLink="login">Login</a>
+  } @else {
+    &nbsp;&nbsp;<span>Hi <a routerLink="/my-profile">{{ authService.user.firstName }}</a>!</span>&nbsp;&nbsp;
     <button type="button" (click)="logout()">Logout</button>
-  </ng-template>
+  }
 </div>
 <router-outlet />
-<ng-container *ngIf="appService.error$ | async as error">
+@if (appService.error$ | async; as error) {
   <app-toast [message]="error" type="error" (closed)="appService.clearError()" />
-</ng-container>
-<ng-container *ngIf="appService.loading$ | async">
+}
+@if (appService.loading$ | async) {
   <div class="loader">
     <p>Loading...</p>
   </div>
-</ng-container>
+}

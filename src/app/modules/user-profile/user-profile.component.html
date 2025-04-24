@@ -1,5 +1,5 @@
 <br />
-<ng-container *ngIf="showEditForm; else viewDetails">
+@if (showEditForm) {
   <form [formGroup]="detailsForm" (ngSubmit)="saveDetails()">
     <div>
       <label>
@@ -8,7 +8,7 @@
         <input type="text" formControlName="lastName" placeholder="Last name" />
       </label>
     </div>
-    <br>
+    <br />
     <div>
       <label>
         Gender:&nbsp;
@@ -18,66 +18,62 @@
         <label for="option-female">Female</label>
       </label>
     </div>
-    <br>
+    <br />
     <div>
       <label>
         Age:&nbsp;
         <input type="number" formControlName="age" />
       </label>
     </div>
-    <br>
+    <br />
     <div>
       <label>
         Birth Date:&nbsp;
         <input type="date" formControlName="birthDate" >
       </label>
     </div>
-    <br>
+    <br />
     <div>
       <label>
         Email:&nbsp;
         <input type="email" formControlName="email" />
       </label>
     </div>
-    <br>
+    <br />
     <div>
       <label>
         Phone:&nbsp;
         <input type="tel" formControlName="phone" />
       </label>
     </div>
-    <br>
+    <br />
     <div>
       <label>
         Username:&nbsp;
         <input type="text" formControlName="username" />
       </label>
     </div>
-    <br>
+    <br />
     <div>
       <label>
         Password:&nbsp;
         <input type="text" formControlName="password" />
       </label>
     </div>
-    <br>
+    <br />
     <button type="button" (click)="cancelEdit()">Cancel</button>&nbsp;&nbsp;
     <button type="submit" [disabled]="!detailsForm.valid || saving">{{ saving ? 'Saving...' : 'Save' }}</button>
   </form>
-</ng-container>
-<ng-template #viewDetails>
-  <ng-container *ngIf="details; else noDetails">
-    <h2>{{ details.firstName }} {{ details.lastName }}</h2>
-    <h4>{{ details.role }}</h4>
-    <p>{{ details.gender }}, {{ details.age }}</p>
-    <p>{{ details.birthDate }}</p>
-    <p>{{ details.email }}</p>
-    <p>{{ details.phone }}</p>
-    <p>{{ details.username }}</p>
-    <br />
-    <button type="button" (click)="editDetails()">Edit</button>
-  </ng-container>
-</ng-template>
-<ng-template #noDetails>
+} @else if (details) {
+  <h2>{{ details.firstName }} {{ details.lastName }}</h2>
+  <h4>{{ details.role }}</h4>
+  <p>{{ details.gender }}, {{ details.age }}</p>
+  <p>{{ details.birthDate }}</p>
+  <p>{{ details.email }}</p>
+  <p>{{ details.phone }}</p>
+  <p>{{ details.username }}</p>
+  <br />
+  <button type="button" (click)="editDetails()">Edit</button>
+} @else {
   <div>No details found</div>
-</ng-template>
+}

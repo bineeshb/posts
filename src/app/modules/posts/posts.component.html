@@ -1,18 +1,21 @@
 <h1>{{ title }}</h1>
-<ng-container *ngIf="postsList$ | async as postsList; else noPosts">
-  <div *ngFor="let post of postsList.posts">
-    <h3><a [routerLink]="['/', post.id]" [state]="{ backPageTitle: title, backLink: routeUrl }">{{ post.title }}</a></h3>
-    <p><em>by {{ post.userId }}</em></p>
-    <p>{{ post.body }}</p>
-    <p *ngIf="post.tags.length">
-      Tags:
-      <ng-container *ngFor="let tag of post.tags; last as isLast">
-        {{ tag }}<ng-container *ngIf="!isLast">,</ng-container>
-      </ng-container>
-    </p>
-    <p><em>{{ post.views }} views - {{ post.reactions.likes }} likes - {{ post.reactions.dislikes }} dislikes</em></p>
-  </div>
-</ng-container>
-<ng-template #noPosts>
+@if (postsList$ | async; as postsList) {
+  @for (post of postsList.posts; track post) {
+    <div>
+      <h3><a [routerLink]="['/', post.id]" [state]="{ backPageTitle: title, backLink: routeUrl }">{{ post.title }}</a></h3>
+      <p><em>by {{ post.userId }}</em></p>
+      <p>{{ post.body }}</p>
+      @if (post.tags.length) {
+        <p>
+          Tags:
+          @for (tag of post.tags; track tag; let isLast = $last) {
+            {{ tag }}@if (!isLast) {, }
+          }
+        </p>
+      }
+      <p><em>{{ post.views }} views - {{ post.reactions.likes }} likes - {{ post.reactions.dislikes }} dislikes</em></p>
+    </div>
+  }
+} @else {
   <div>No Posts found.</div>
-</ng-template>
+}
