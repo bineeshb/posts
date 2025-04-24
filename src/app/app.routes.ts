@@ -1,4 +1,5 @@
-import { Routes } from '@angular/router';
+import { inject } from '@angular/core';
+import { Route, Router, Routes, UrlSegment } from '@angular/router';
 
 import { authGuard } from 'app/services';
 
@@ -25,7 +26,11 @@ export const appRoutes: Routes = [{
 {
   path: ':postId',
   loadComponent: () => import('app/modules/post-page/post-page.component').then(m => m.PostPageComponent),
-  title: 'Post'
+  title: 'Post',
+  canMatch: [(route: Route, segments: UrlSegment[]) => {
+    return (route.path?.includes(':postId') && isFinite(parseInt(segments[segments.length - 1].path)))
+        || inject(Router).navigate(['']);
+  }]
 },
 {
   path: '',
