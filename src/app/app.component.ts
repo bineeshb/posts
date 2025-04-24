@@ -7,11 +7,10 @@ import { ToastComponent } from './shared/components/toast/toast.component';
 import { AppService } from './app.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  standalone: true,
-  imports: [AsyncPipe, RouterLink, RouterOutlet, ToastComponent]
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    imports: [AsyncPipe, RouterLink, RouterOutlet, ToastComponent]
 })
 export class AppComponent {
 

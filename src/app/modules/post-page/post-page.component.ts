@@ -9,11 +9,10 @@ import { Unsub } from 'app/models/unsub.model';
 import { PostsService } from 'app/services';
 
 @Component({
-  selector: 'app-post-page',
-  templateUrl: './post-page.component.html',
-  styleUrls: ['./post-page.component.scss'],
-  standalone: true,
-  imports: [RouterLink]
+    selector: 'app-post-page',
+    templateUrl: './post-page.component.html',
+    styleUrls: ['./post-page.component.scss'],
+    imports: [RouterLink]
 })
 export class PostPageComponent extends Unsub implements OnInit {
   @Input() postId?: string;

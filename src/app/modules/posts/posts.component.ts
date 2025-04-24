@@ -7,11 +7,10 @@ import { PostsList } from 'app/interfaces';
 import { AuthService, PostsService } from 'app/services';
 
 @Component({
-  selector: 'app-posts',
-  templateUrl: './posts.component.html',
-  styleUrls: ['./posts.component.scss'],
-  standalone: true,
-  imports: [AsyncPipe, RouterLink]
+    selector: 'app-posts',
+    templateUrl: './posts.component.html',
+    styleUrls: ['./posts.component.scss'],
+    imports: [AsyncPipe, RouterLink]
 })
 export class PostsComponent implements OnInit {
   @Input() showUserPosts = false;

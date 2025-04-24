@@ -6,11 +6,10 @@ import { finalize, take } from 'rxjs';
 import { AuthService } from 'app/services';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  standalone: true,
-  imports: [ReactiveFormsModule]
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    imports: [ReactiveFormsModule]
 })
 export class LoginComponent {
   errorMessage: string | null = null;

@@ -7,11 +7,10 @@ import { User } from 'app/interfaces';
 import { AuthService, UserService } from 'app/services';
 
 @Component({
-  selector: 'app-user-profile',
-  templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.scss'],
-  standalone: true,
-  imports: [ReactiveFormsModule]
+    selector: 'app-user-profile',
+    templateUrl: './user-profile.component.html',
+    styleUrls: ['./user-profile.component.scss'],
+    imports: [ReactiveFormsModule]
 })
 export class UserProfileComponent implements OnInit {
   details: User | null = null;
