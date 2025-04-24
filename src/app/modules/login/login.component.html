@@ -1,23 +1,23 @@
-<br>
-  <br>
-    <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
-      @if (errorMessage) {
-        <div>{{ errorMessage }}</div>
-      }
-      <br>
-        <div>
-          <label>
-            Username:&nbsp;
-            <input type="text" formControlName="username" />
-          </label>
-        </div>
-        <br>
-          <div>
-            <label>
-              Password:&nbsp;
-              <input type="password" formControlName="password" />
-            </label>
-          </div>
-          <br>
-            <button type="submit" [disabled]="!loginForm.valid || fetching">{{ fetching ? 'Validating...' : 'Login' }}</button>
-          </form>
+<br />
+<br />
+<form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+  @if (errorMessage) {
+  <div>{{ errorMessage }}</div>
+  }
+  <br />
+  <div>
+    <label>
+      Username:&nbsp;
+      <input type="text" formControlName="username" />
+    </label>
+  </div>
+  <br />
+  <div>
+    <label>
+      Password:&nbsp;
+      <input type="password" formControlName="password" />
+    </label>
+  </div>
+  <br />
+  <button type="submit" [disabled]="!loginForm.valid || fetching">{{ fetching ? 'Validating...' : 'Login' }}</button>
+</form>
