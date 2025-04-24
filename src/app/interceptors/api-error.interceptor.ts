@@ -1,12 +1,5 @@
 import { inject } from '@angular/core';
-import {
-  HttpRequest,
-  HttpErrorResponse,
-  HttpContextToken,
-  HttpContext,
-  HttpResponse,
-  HttpInterceptorFn
-} from '@angular/common/http';
+import { HttpRequest, HttpErrorResponse, HttpContextToken, HttpContext, HttpResponse, HttpInterceptorFn } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError, of, tap, throwError } from 'rxjs';
 
