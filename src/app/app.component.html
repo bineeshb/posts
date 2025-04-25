@@ -11,10 +11,11 @@
   }
 </div>
 <router-outlet />
-@if (appService.error$ | async; as error) {
+@let error = appService.error();
+@if (error) {
   <app-toast [message]="error" type="error" (closed)="appService.clearError()" />
 }
-@if (appService.loading$ | async) {
+@if (appService.loading()) {
   <div class="loader">
     <p>Loading...</p>
   </div>

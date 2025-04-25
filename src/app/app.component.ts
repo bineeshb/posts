@@ -1,4 +1,3 @@
-import { AsyncPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
@@ -10,7 +9,7 @@ import { AppService } from './app.service';
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    imports: [AsyncPipe, RouterLink, RouterOutlet, ToastComponent]
+    imports: [RouterLink, RouterOutlet, ToastComponent]
 })
 export class AppComponent {
 
