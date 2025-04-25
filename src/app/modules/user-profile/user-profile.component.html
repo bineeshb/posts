@@ -1,5 +1,6 @@
 <br />
-@if (showEditForm) {
+@let userDetails = details();
+@if (showEditForm()) {
   <form [formGroup]="detailsForm" (ngSubmit)="saveDetails()">
     <div>
       <label>
@@ -62,16 +63,16 @@
     </div>
     <br />
     <button type="button" (click)="cancelEdit()">Cancel</button>&nbsp;&nbsp;
-    <button type="submit" [disabled]="!detailsForm.valid || saving">{{ saving ? 'Saving...' : 'Save' }}</button>
+    <button type="submit" [disabled]="!detailsForm.valid || saving()">{{ saving() ? 'Saving...' : 'Save' }}</button>
   </form>
-} @else if (details) {
-  <h2>{{ details.firstName }} {{ details.lastName }}</h2>
-  <h4>{{ details.role }}</h4>
-  <p>{{ details.gender }}, {{ details.age }}</p>
-  <p>{{ details.birthDate }}</p>
-  <p>{{ details.email }}</p>
-  <p>{{ details.phone }}</p>
-  <p>{{ details.username }}</p>
+} @else if (userDetails) {
+  <h2>{{ userDetails.firstName }} {{ userDetails.lastName }}</h2>
+  <h4>{{ userDetails.role }}</h4>
+  <p>{{ userDetails.gender }}, {{ userDetails.age }}</p>
+  <p>{{ userDetails.birthDate }}</p>
+  <p>{{ userDetails.email }}</p>
+  <p>{{ userDetails.phone }}</p>
+  <p>{{ userDetails.username }}</p>
   <br />
   <button type="button" (click)="editDetails()">Edit</button>
 } @else {

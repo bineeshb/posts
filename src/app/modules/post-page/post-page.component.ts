@@ -1,5 +1,5 @@
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { filter, take, takeUntil } from 'rxjs';
@@ -17,9 +17,9 @@ import { PostsService } from 'app/services';
 export class PostPageComponent extends Unsub implements OnInit {
   @Input() postId?: string;
 
-  details: Post | null = null;
-  backPageTitle = 'Posts';
-  backLink = ''
+  details = signal<Post | null>(null);
+  backPageTitle = signal('Posts');
+  backLink = signal('');
 
   constructor(
     private readonly postsService: PostsService,
@@ -32,8 +32,8 @@ export class PostPageComponent extends Unsub implements OnInit {
       takeUntil(this.unsubscribe$)
     ).subscribe(() => {
       const state = router.getCurrentNavigation()?.extras.state;
-      this.backPageTitle = state?.['backPageTitle'] ?? 'Posts';
-      this.backLink = state?.['backLink'] ?? '/';
+      this.backPageTitle.set(state?.['backPageTitle'] ?? 'Posts');
+      this.backLink.set(state?.['backLink'] ?? '/');
     });
   }
 
@@ -42,7 +42,7 @@ export class PostPageComponent extends Unsub implements OnInit {
 
     if (!isNaN(postId)) {
       this.postsService.getPost(postId).pipe(take(1)).subscribe(postDetails => {
-        this.details = postDetails;
+        this.details.set(postDetails);
         this.ngTitle.setTitle(postDetails.title);
       });
     }

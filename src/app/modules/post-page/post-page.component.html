@@ -1,18 +1,19 @@
 <br />
-<a [routerLink]="[backLink]">&lt; Back to {{ backPageTitle }}</a>
-@if (details) {
-  <h2>{{ details.title }}</h2>
-  <p><em>by {{ details.userId }}</em></p>
-  <p>{{ details.body }}</p>
-  @if (details.tags.length) {
+<a [routerLink]="[backLink()]">&lt; Back to {{ backPageTitle() }}</a>
+@let postDetails = details();
+@if (postDetails) {
+  <h2>{{ postDetails.title }}</h2>
+  <p><em>by {{ postDetails.userId }}</em></p>
+  <p>{{ postDetails.body }}</p>
+  @if (postDetails.tags.length) {
     <p>
       Tags:
-      @for (tag of details.tags; track tag; let isLast = $last) {
+      @for (tag of postDetails.tags; track tag; let isLast = $last) {
         {{ tag }}@if (!isLast) {,}
       }
     </p>
   }
-  <p><em>{{ details.views }} views - {{ details.reactions.likes }} likes - {{ details.reactions.dislikes }} dislikes</em></p>
+  <p><em>{{ postDetails.views }} views - {{ postDetails.reactions.likes }} likes - {{ postDetails.reactions.dislikes }} dislikes</em></p>
 } @else {
   <div>This post is not available</div>
 }

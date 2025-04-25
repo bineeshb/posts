@@ -1,8 +1,8 @@
-<h1>{{ title }}</h1>
+<h1>{{ title() }}</h1>
 @if (postsList$ | async; as postsList) {
   @for (post of postsList.posts; track post) {
     <div>
-      <h3><a [routerLink]="['/', post.id]" [state]="{ backPageTitle: title, backLink: routeUrl }">{{ post.title }}</a></h3>
+      <h3><a [routerLink]="['/', post.id]" [state]="{ backPageTitle: title(), backLink: routeUrl }">{{ post.title }}</a></h3>
       <p><em>by {{ post.userId }}</em></p>
       <p>{{ post.body }}</p>
       @if (post.tags.length) {
