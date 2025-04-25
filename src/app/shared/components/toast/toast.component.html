@@ -1,7 +1,7 @@
 @if (message) {
-  <div class="wrapper" [class.error]="type === 'error'">
+  <div class="wrapper" [class.error]="isError()">
     <span class="icon">
-      @if (type === 'error') {
+      @if (isError()) {
         !
       } @else {
         &check;

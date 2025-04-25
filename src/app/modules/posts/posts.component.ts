@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, Input, OnInit, signal } from '@angular/core';
+import { Component, input, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -13,7 +13,9 @@ import { AuthService, PostsService } from 'app/services';
     imports: [AsyncPipe, RouterLink]
 })
 export class PostsComponent implements OnInit {
-  @Input() showUserPosts = false;
+  showUserPosts = input(false, {
+    transform: isUserPosts => isUserPosts ?? false
+  });
 
   postsList$: Observable<PostsList> | null = null;
   routeUrl = '';
@@ -30,7 +32,7 @@ export class PostsComponent implements OnInit {
 
   ngOnInit(): void {
     this.title.set((this.route.snapshot.routeConfig?.title as string) ?? 'Posts');
-    this.postsList$ = (this.showUserPosts && this.authService.userId)
+    this.postsList$ = (this.showUserPosts() && this.authService.userId)
       ? this.postsService.getUserPosts(this.authService.userId)
       : this.postsService.getPosts();
   }
