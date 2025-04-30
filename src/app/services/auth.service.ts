@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 
+import { environment } from 'env/environment';
 import { LoginUser, LoggedInUser } from 'app/interfaces';
 import { getAPIContext } from 'app/interceptors';
 
@@ -9,7 +10,7 @@ import { getAPIContext } from 'app/interceptors';
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly api = 'https://dummyjson.com/auth';
+  private readonly api = `${environment.apiRoot}/auth`;
   private readonly http = inject(HttpClient);
   private readonly loggedInUser = signal<LoggedInUser | null>(null);
   user = this.loggedInUser.asReadonly();
