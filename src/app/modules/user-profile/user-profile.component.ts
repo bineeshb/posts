@@ -37,7 +37,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getUser(this.authService.userId as number).pipe(take(1))
+    this.userService.getUser(this.authService.userId() as number).pipe(take(1))
       .subscribe(details => this.details.set(details));
   }
 
@@ -65,7 +65,7 @@ export class UserProfileComponent implements OnInit {
     const formValues = this.detailsForm.getRawValue();
     this.detailsForm.disable();
     this.saving.set(true);
-    this.userService.updateUser(this.authService.userId as number, formValues)
+    this.userService.updateUser(this.authService.userId() as number, formValues)
       .pipe(
         finalize(() => {
           this.detailsForm.enable();

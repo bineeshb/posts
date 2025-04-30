@@ -32,8 +32,8 @@ export class PostsComponent implements OnInit {
 
   ngOnInit(): void {
     this.title.set((this.route.snapshot.routeConfig?.title as string) ?? 'Posts');
-    this.postsList$ = (this.showUserPosts() && this.authService.userId)
-      ? this.postsService.getUserPosts(this.authService.userId)
+    this.postsList$ = (this.showUserPosts() && this.authService.userId())
+      ? this.postsService.getUserPosts(this.authService.userId() as number)
       : this.postsService.getPosts();
   }
 }

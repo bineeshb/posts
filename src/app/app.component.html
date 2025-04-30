@@ -1,10 +1,11 @@
 <div>
-  @if (authService.user) {
+  @let user = authService.user();
+  @if (user) {
     <a routerLink="/my-posts">My Posts</a>&nbsp;&nbsp;&nbsp;&nbsp;
   }
   <a routerLink="/">Posts</a>&nbsp;&nbsp;&nbsp;&nbsp;
-  @if (authService.user) {
-    &nbsp;&nbsp;<span>Hi <a routerLink="/my-profile">{{ authService.user.firstName }}</a>!</span>&nbsp;&nbsp;
+  @if (user) {
+    &nbsp;&nbsp;<span>Hi <a routerLink="/my-profile">{{ user.firstName }}</a>!</span>&nbsp;&nbsp;
     <button type="button" (click)="logout()">Logout</button>
   } @else {
     <a routerLink="login">Login</a>
