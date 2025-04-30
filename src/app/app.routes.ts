@@ -2,6 +2,7 @@ import { inject } from '@angular/core';
 import { Route, Router, Routes, UrlSegment } from '@angular/router';
 
 import { authGuard } from 'app/services';
+import { PostsComponent } from './modules/posts/posts.component';
 
 export const appRoutes: Routes = [{
   path: 'login',
@@ -16,7 +17,7 @@ export const appRoutes: Routes = [{
 },
 {
   path: 'my-posts',
-  loadComponent: () => import('app/modules/posts/posts.component').then(m => m.PostsComponent),
+  component: PostsComponent,
   canActivate: [authGuard()],
   title: 'My Posts',
   data: {
@@ -30,11 +31,14 @@ export const appRoutes: Routes = [{
   canMatch: [(route: Route, segments: UrlSegment[]) => {
     return (route.path?.includes(':postId') && isFinite(parseInt(segments[segments.length - 1].path)))
         || inject(Router).navigate(['']);
-  }]
+  }],
+  data: {
+    preload: true
+  }
 },
 {
   path: '',
-  loadComponent: () => import('app/modules/posts/posts.component').then(m => m.PostsComponent),
+  component: PostsComponent,
   title: 'Posts'
 },
 {
