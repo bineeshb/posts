@@ -1,6 +1,10 @@
 # Posts
 
-This project uses [Angular CLI](https://github.com/angular/angular-cli) version 19 and [DummyJSON](https://dummyjson.com/) REST APIs.
+This project uses:
+
+- [Angular CLI](https://github.com/angular/angular-cli) version 19
+- [DummyJSON](https://dummyjson.com/) REST APIs.
+- [ngx-bb-ui](https://www.npmjs.com/package/ngx-bb-ui) Custom Angular components library
 
 ## Development server
 

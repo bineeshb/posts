@@ -32,6 +32,9 @@ importers:
       '@angular/router':
         specifier: ~19.2.8
         version: 19.2.8(@angular/common@19.2.8(@angular/core@19.2.8(rxjs@7.5.7)(zone.js@0.15.0))(rxjs@7.5.7))(@angular/core@19.2.8(rxjs@7.5.7)(zone.js@0.15.0))(@angular/platform-browser@19.2.8(@angular/animations@19.2.8(@angular/common@19.2.8(@angular/core@19.2.8(rxjs@7.5.7)(zone.js@0.15.0))(rxjs@7.5.7))(@angular/core@19.2.8(rxjs@7.5.7)(zone.js@0.15.0)))(@angular/common@19.2.8(@angular/core@19.2.8(rxjs@7.5.7)(zone.js@0.15.0))(rxjs@7.5.7))(@angular/core@19.2.8(rxjs@7.5.7)(zone.js@0.15.0)))(rxjs@7.5.7)
+      ngx-bb-ui:
+        specifier: ^0.0.2
+        version: 0.0.2(@angular/common@19.2.8(@angular/core@19.2.8(rxjs@7.5.7)(zone.js@0.15.0))(rxjs@7.5.7))(@angular/core@19.2.8(rxjs@7.5.7)(zone.js@0.15.0))
       rxjs:
         specifier: ~7.5.0
         version: 7.5.7
@@ -3234,6 +3237,12 @@ packages:
 
   neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
+
+  ngx-bb-ui@0.0.2:
+    resolution: {integrity: sha512-KgQo+Ya7DFgVxWQXOU5XAU1mPhS4glL4HUnH1Nu9459fAwZaTxIXt2l1sq0FSvmMkDpZQDQIagf+Hh/TsVpxGQ==}
+    peerDependencies:
+      '@angular/common': ^19.2.0
+      '@angular/core': ^19.2.0
 
   node-addon-api@6.1.0:
     resolution: {integrity: sha512-+eawOlIgy680F0kBzPUNFhMZGtJ1YmqM6l4+Crf4IkImjYrO/mqPwRMh352g23uIaQKFItcQ64I7KMaJxHgAVA==}
@@ -7658,6 +7667,12 @@ snapshots:
   negotiator@1.0.0: {}
 
   neo-async@2.6.2: {}
+
+  ngx-bb-ui@0.0.2(@angular/common@19.2.8(@angular/core@19.2.8(rxjs@7.5.7)(zone.js@0.15.0))(rxjs@7.5.7))(@angular/core@19.2.8(rxjs@7.5.7)(zone.js@0.15.0)):
+    dependencies:
+      '@angular/common': 19.2.8(@angular/core@19.2.8(rxjs@7.5.7)(zone.js@0.15.0))(rxjs@7.5.7)
+      '@angular/core': 19.2.8(rxjs@7.5.7)(zone.js@0.15.0)
+      tslib: 2.8.1
 
   node-addon-api@6.1.0:
     optional: true
