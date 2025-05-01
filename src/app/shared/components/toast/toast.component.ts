@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, computed, EventEmitter, input, Input, OnInit, Output } from '@angular/core';
 import { asyncScheduler, Subscription } from 'rxjs';
 
 @Component({
@@ -9,8 +9,9 @@ import { asyncScheduler, Subscription } from 'rxjs';
 })
 export class ToastComponent implements OnInit {
   @Input() message: string | null = null;
-  @Input() type: 'success' | 'error' = 'success';
-  @Input() life = 5000;
+  type = input<'success' | 'error'>('success');
+  life = input(5000);
+  isError = computed(() => this.type() === 'error');
 
   @Output() closed = new EventEmitter<void>();
 
@@ -19,8 +20,8 @@ export class ToastComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    if (this.type !== 'error') {
-      this.sub$ = asyncScheduler.schedule(this.close.bind(this), this.life);
+    if (!this.isError()) {
+      this.sub$ = asyncScheduler.schedule(this.close.bind(this), this.life());
     }
   }
 

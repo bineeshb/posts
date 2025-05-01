@@ -1,8 +1,8 @@
 <br />
 <br />
 <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
-  @if (errorMessage) {
-  <div>{{ errorMessage }}</div>
+  @if (errorMessage()) {
+    <div>{{ errorMessage() }}</div>
   }
   <br />
   <div>
@@ -19,5 +19,5 @@
     </label>
   </div>
   <br />
-  <button type="submit" [disabled]="!loginForm.valid || fetching">{{ fetching ? 'Validating...' : 'Login' }}</button>
+  <button type="submit" [disabled]="!loginForm.valid || fetching()">{{ fetching() ? 'Validating...' : 'Login' }}</button>
 </form>

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { environment } from 'env/environment';
 import { Post, PostsList } from 'app/interfaces';
 import { getAPIContext } from 'app/interceptors';
 
@@ -9,7 +10,7 @@ import { getAPIContext } from 'app/interceptors';
   providedIn: 'root'
 })
 export class PostsService {
-  private readonly api = 'https://dummyjson.com/posts';
+  private readonly api = `${environment.apiRoot}/posts`;
   private readonly http = inject(HttpClient);
 
   getPosts(): Observable<PostsList> {

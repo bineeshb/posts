@@ -1,18 +1,18 @@
-import { Injectable } from '@angular/core';
-import { asyncScheduler, BehaviorSubject } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
+import { asyncScheduler } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppService {
-  private readonly errorMessage = new BehaviorSubject<string | null>(null);
-  private readonly isLoading = new BehaviorSubject(false);
+  private readonly errorMessage = signal<string | null>(null);
+  private readonly isLoading = signal(false);
 
-  error$ = this.errorMessage.asObservable();
-  loading$ = this.isLoading.asObservable();
+  error = this.errorMessage.asReadonly();
+  loading = this.isLoading.asReadonly();
 
   toggleLoader(showLoader = false): void {
-    asyncScheduler.schedule(() => this.isLoading.next(showLoader));
+    asyncScheduler.schedule(() => this.isLoading.set(showLoader));
   }
 
   showLoader(): void {
@@ -20,10 +20,10 @@ export class AppService {
   }
 
   showError(message: string): void {
-    this.errorMessage.next(message);
+    this.errorMessage.set(message);
   }
 
   clearError(): void {
-    this.errorMessage.next(null);
+    this.errorMessage.set(null);
   }
 }

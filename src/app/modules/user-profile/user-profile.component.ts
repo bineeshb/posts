@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { finalize, take } from 'rxjs';
 
@@ -10,14 +10,13 @@ import { AuthService, UserService } from 'app/services';
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss'],
-  standalone: true,
   imports: [ReactiveFormsModule]
 })
 export class UserProfileComponent implements OnInit {
-  details: User | null = null;
+  details = signal<User | null>(null);
   detailsForm: FormGroup;
-  saving = false;
-  showEditForm = false;
+  saving = signal(false);
+  showEditForm = signal(false);
 
   constructor(
     private readonly authService: AuthService,
@@ -38,12 +37,12 @@ export class UserProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getUser(this.authService.userId as number).pipe(take(1))
-      .subscribe(details => this.details = details);
+    this.userService.getUser(this.authService.userId() as number).pipe(take(1))
+      .subscribe(details => this.details.set(details));
   }
 
   editDetails(): void {
-    const details = this.details as User;
+    const details = this.details() as User;
     this.detailsForm.setValue({
       firstName: details.firstName,
       lastName: details.lastName,
@@ -55,28 +54,28 @@ export class UserProfileComponent implements OnInit {
       username: details.username,
       password: details.password
     });
-    this.showEditForm = true;
+    this.showEditForm.set(true);
   }
 
   cancelEdit(): void {
-    this.showEditForm = false;
+    this.showEditForm.set(false);
   }
 
   saveDetails(): void {
     const formValues = this.detailsForm.getRawValue();
     this.detailsForm.disable();
-    this.saving = true;
-    this.userService.updateUser(this.authService.userId as number, formValues)
+    this.saving.set(true);
+    this.userService.updateUser(this.authService.userId() as number, formValues)
       .pipe(
         finalize(() => {
           this.detailsForm.enable();
-          this.saving = false;
+          this.saving.set(false);
         }),
         take(1)
       )
       .subscribe(updatedDetails => {
-        this.details = { ...updatedDetails, ...formValues };
-        this.showEditForm = false;
+        this.details.set({ ...updatedDetails, ...formValues });
+        this.showEditForm.set(false);
       });
   }
 }
