@@ -66,7 +66,7 @@
     <button type="submit" [disabled]="!detailsForm.valid || saving()">{{ saving() ? 'Saving...' : 'Save' }}</button>
   </form>
 } @else if (userDetails) {
-  <h2>{{ userDetails.firstName }} {{ userDetails.lastName }}</h2>
+  <h2 data-testid="title-userfullname">{{ userDetails.firstName }} {{ userDetails.lastName }}</h2>
   <h4>{{ userDetails.role }}</h4>
   <p>{{ userDetails.gender }}, {{ userDetails.age }}</p>
   <p>{{ userDetails.birthDate }}</p>
@@ -74,7 +74,7 @@
   <p>{{ userDetails.phone }}</p>
   <p>{{ userDetails.username }}</p>
   <br />
-  <button type="button" (click)="editDetails()">Edit</button>
+  <button type="button" (click)="editDetails()" data-testid="btn-edit">Edit</button>
 } @else {
-  <div>No details found</div>
+  <div data-testid="msg-profile-nodetails">No details found</div>
 }

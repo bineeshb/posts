@@ -28,11 +28,13 @@ describe('Login Page', () => {
     cy.location('pathname').should('eq', '/')
   })
 
-  it.only('show error for invalid credentials', () => {
+  it('show error for invalid credentials', () => {
     cy.getByTestId('msg-login-error').should('not.exist')
     cy.intercept('POST', '/auth/login', {
       statusCode: 400,
-      body: { message: 'Invalid credentials' }
+      body: {
+        message: 'Invalid credentials'
+      }
     })
 
     cy.getByTestId('input-username').type('cytest')

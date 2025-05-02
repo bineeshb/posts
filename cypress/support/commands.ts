@@ -40,10 +40,25 @@ declare global {
   namespace Cypress {
     interface Chainable {
       getByTestId(testid: string, ...args: any): Chainable<JQuery<HTMLElement>>
+      loginViaUI(): Chainable<void>
     }
   }
 }
 
 Cypress.Commands.add('getByTestId', (selector, ...args) => cy.get(`[data-testid=${selector}]`, ...args))
+
+Cypress.Commands.add('loginViaUI', () => {
+  cy.intercept('GET', '/posts', { fixture: 'posts.json' }).as('getPosts')
+  cy.intercept('GET', '/posts/user/*', { fixture: 'posts.json' }).as('getUserPosts')
+  cy.intercept('GET', '/posts/*', { fixture: 'post.json' }).as('getPost')
+  cy.intercept('POST', '/auth/login', { fixture: 'login.json' }).as('loginUser')
+  cy.visit('/')
+  cy.wait('@getPosts')
+  cy.getByTestId('link-page-login').click()
+  cy.getByTestId('input-username').type('cytest')
+  cy.getByTestId('input-password').type('cyt3stP@ss')
+  cy.getByTestId('btn-login').click()
+  cy.wait('@loginUser')
+})
 
 export default {}
