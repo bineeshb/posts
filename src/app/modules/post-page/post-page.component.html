@@ -1,8 +1,8 @@
 <br />
-<a [routerLink]="[backLink()]">&lt; Back to {{ backPageTitle() }}</a>
+<a data-testid="link-back" [routerLink]="[backLink()]">&lt; Back to {{ backPageTitle() }}</a>
 @let postDetails = details();
 @if (postDetails) {
-  <h2>{{ postDetails.title }}</h2>
+  <h2 data-testid="title-postpage">{{ postDetails.title }}</h2>
   <p><em>by {{ postDetails.userId }}</em></p>
   <p>{{ postDetails.body }}</p>
   @if (postDetails.tags.length) {
@@ -15,5 +15,5 @@
   }
   <p><em>{{ postDetails.views }} views - {{ postDetails.reactions.likes }} likes - {{ postDetails.reactions.dislikes }} dislikes</em></p>
 } @else {
-  <div>This post is not available</div>
+  <div data-title="msg-nopost">This post is not available</div>
 }
