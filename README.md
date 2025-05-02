@@ -4,7 +4,8 @@ This project uses:
 
 - [Angular CLI](https://github.com/angular/angular-cli) version 19
 - [DummyJSON](https://dummyjson.com/) REST APIs.
-- [ngx-bb-ui](https://www.npmjs.com/package/ngx-bb-ui) Custom Angular components library
+- [ngx-bb-ui](https://www.npmjs.com/package/ngx-bb-ui) Custom Angular components library [View Code](https://github.com/bineeshb/bb-lib)
+- [Cypress](https://www.cypress.io/) for E2E testing
 
 ## Development server
 
@@ -24,7 +25,7 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Run `npm run cy:open` to execute the end-to-end tests, using [Cypress](https://www.cypress.io/).
 
 ## Further help
 

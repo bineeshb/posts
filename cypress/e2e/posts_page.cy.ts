@@ -1,23 +1,49 @@
 describe('Posts Page', () => {
-  beforeEach(() => {
+  it('successfully loads and display posts', () => {
+    cy.visit('/')
+
+    cy.getByTestId('title-posts').should('contain', 'Posts')
+    cy.getByTestId('title-post').should('be.visible')
+    cy.getByTestId('msg-noposts').should('not.exist')
+  })
+
+  it('display no posts message', () => {
+    cy.intercept('GET', '/posts', {})
+    cy.visit('/')
+
+    cy.getByTestId('title-posts').should('contain', 'Posts')
+    cy.getByTestId('title-post').should('not.exist')
+    cy.getByTestId('msg-noposts').should('exist').should('be.visible')
+  })
+
+  it('navigate to and from Post page', () => {
+    cy.intercept('GET', '/posts', { fixture: 'posts.json' })
+    cy.visit('/')
+
+    cy.location('pathname').should('eq', '/')
+    cy.getByTestId('link-back').should('not.exist')
+    cy.getByTestId('title-postpage').should('not.exist')
+
+    cy.getByTestId('link-post').click()
+
     cy.intercept(
       {
         method: 'GET',
-        url: '/posts'
+        url: '/posts/*'
       },
       {
-        fixture: 'posts.json'
+        fixture: 'post.json'
       }
-    ).as('getPosts')
+    )
+    cy.location('pathname').should('eq', '/1')
+    cy.getByTestId('link-back').should('exist').should('be.visible')
+    cy.getByTestId('link-back').contains(/back to posts/i)
+    cy.getByTestId('title-postpage').should('exist').should('be.visible')
 
-    cy.visit('/')
-  })
+    cy.getByTestId('link-back').click()
 
-  it('successfully loads', () => {
-    cy.get('h1').should('contain', 'Posts')
-  })
-
-  it('displays posts', () => {
-    cy.get('h3').should('be.visible')
+    cy.location('pathname').should('eq', '/')
+    cy.getByTestId('link-back').should('not.exist')
+    cy.getByTestId('title-postpage').should('not.exist')
   })
 })

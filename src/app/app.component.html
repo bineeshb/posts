@@ -6,9 +6,9 @@
   <a routerLink="/">Posts</a>&nbsp;&nbsp;&nbsp;&nbsp;
   @if (user) {
     &nbsp;&nbsp;<span>Hi <a routerLink="/my-profile">{{ user.firstName }}</a>!</span>&nbsp;&nbsp;
-    <button type="button" (click)="logout()">Logout</button>
+    <button data-testid="btn-logout" type="button" (click)="logout()">Logout</button>
   } @else {
-    <a routerLink="login">Login</a>
+    <a data-testid="link-page-login" routerLink="login">Login</a>
   }
 </div>
 <router-outlet />

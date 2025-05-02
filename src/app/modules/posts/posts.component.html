@@ -1,8 +1,11 @@
-<h1>{{ title() }}</h1>
+<h1 data-testid="title-posts">{{ title() }}</h1>
 @if (postsList$ | async; as postsList) {
   @for (post of postsList.posts; track post) {
     <div>
-      <h3><a [routerLink]="['/', post.id]" [state]="{ backPageTitle: title(), backLink: routeUrl }">{{ post.title }}</a></h3>
+      <h3 data-testid="title-post">
+        <a [routerLink]="['/', post.id]" [state]="{ backPageTitle: title(), backLink: routeUrl }"
+          data-testid="link-post">{{ post.title }}</a>
+      </h3>
       <p><em>by {{ post.userId }}</em></p>
       <p>{{ post.body }}</p>
       @if (post.tags.length) {
@@ -17,5 +20,5 @@
     </div>
   }
 } @else {
-  <div>No Posts found.</div>
+  <div data-testid="msg-noposts">No Posts found.</div>
 }
