@@ -1,0 +1,8 @@
+@for (option of trivia().sanitizedOptions; track $index; let optionIdx = $index) {
+  @let optionId = trivia().id + '-' + optionIdx;
+  <div>
+    <input type="radio" [name]="trivia().id" [id]="optionId" [value]="trivia().options[optionIdx]"
+      [formControl]="trivia().controlRef" />
+    <label [for]="optionId" [innerHTML]="option"></label>
+  </div>
+}

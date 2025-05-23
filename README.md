@@ -3,7 +3,7 @@
 This project uses:
 
 - [Angular CLI](https://github.com/angular/angular-cli) version 19
-- [DummyJSON](https://dummyjson.com/) REST APIs.
+- REST APIs from [DummyJSON](https://dummyjson.com/) and [Open Trivia Database](https://opentdb.com/).
 - [ngx-bb-ui](https://www.npmjs.com/package/ngx-bb-ui) Custom Angular components library [View Code](https://github.com/bineeshb/bb-lib)
 - [Cypress](https://www.cypress.io/) for E2E testing
 

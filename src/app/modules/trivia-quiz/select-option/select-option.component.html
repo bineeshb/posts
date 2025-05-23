@@ -1,0 +1,5 @@
+<select [formControl]="trivia().controlRef">
+  @for (option of trivia().sanitizedOptions; track $index; let optionIdx = $index) {
+    <option [value]="trivia().options[optionIdx]" [innerHTML]="option"></option>
+  }
+</select>

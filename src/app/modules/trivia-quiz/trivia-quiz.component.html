@@ -1,16 +1,22 @@
 <h1>Trivia Quiz</h1>
 
-<ol>
-  @for (trivia of (triviaList$ | async); track $index) {
-    <li>
-      <div [innerHTML]="trivia.question"></div>
-      @for (option of trivia.options; track $index) {
-      <div>
-        <input type="radio" [name]="trivia.id" [id]="trivia.id" />
-        <label [innerHTML]="option" [for]="trivia.id"></label>
-      </div>
-      }
-    </li>
-    <br />
-  }
-</ol>
+<form [formGroup]="triviaForm" (submit)="validateAnswers()">
+  <ol>
+    @for (trivia of (triviaList$ | async); track $index) {
+      <li>
+        <div [innerHTML]="trivia.sanitizedQuestion"></div>
+        <ng-container
+          *ngComponentOutlet="
+            trivia.controlComponent;
+            inputs: {
+              trivia: trivia
+            }
+          "></ng-container>
+      </li>
+      <br />
+    }
+  </ol>
+
+  <button type="button" (click)="resetForm()">Clear</button>&nbsp;&nbsp;
+  <button type="submit" [disabled]="triviaForm.invalid">Submit</button>
+</form>
