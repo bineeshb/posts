@@ -1,0 +1,16 @@
+<h1>Trivia Quiz</h1>
+
+<ol>
+  @for (trivia of (triviaList$ | async); track $index) {
+    <li>
+      <div [innerHTML]="trivia.question"></div>
+      @for (option of trivia.options; track $index) {
+      <div>
+        <input type="radio" [name]="trivia.id" [id]="trivia.id" />
+        <label [innerHTML]="option" [for]="trivia.id"></label>
+      </div>
+      }
+    </li>
+    <br />
+  }
+</ol>
