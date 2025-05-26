@@ -5,6 +5,11 @@ import { authGuard } from 'app/services';
 import { PostsComponent } from './modules/posts/posts.component';
 
 export const appRoutes: Routes = [{
+  path: 'trivia-quiz',
+  loadComponent: () => import('app/modules/trivia-quiz/trivia-quiz.component').then(m => m.TriviaQuizComponent),
+  title: 'Trivia Quiz'
+},
+{
   path: 'login',
   loadComponent: () => import('app/modules/login/login.component').then(m => m.LoginComponent),
   title: 'Login'
