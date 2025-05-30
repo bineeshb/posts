@@ -1,3 +1,11 @@
+$contentSpacing: 8px;
+
+:host {
+  display: block;
+  min-height: calc(100vh - ($contentSpacing * 2));
+  padding: $contentSpacing;
+}
+
 .loader {
   position: absolute;
   top: 0;

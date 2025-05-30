@@ -31,6 +31,7 @@ export class LoginComponent {
     const request = this.loginForm.getRawValue();
     this.loginForm.disable();
     this.fetching.set(true);
+    this.errorMessage.set(null);
     this.authService.login(request)
       .pipe(
         finalize(() => {

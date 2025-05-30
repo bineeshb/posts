@@ -1,23 +1,25 @@
 <br />
 <br />
-<form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+<form class="form-wrapper" [formGroup]="loginForm" (ngSubmit)="loginUser()">
+  <h1 class="title">Login</h1>
   @if (errorMessage()) {
-    <div data-testid="msg-login-error">{{ errorMessage() }}</div>
+    <div class="msg-error" data-testid="msg-login-error">{{ errorMessage() }}</div>
   }
   <br />
   <div>
-    <label>
+    <label class="field-row">
       Username:&nbsp;
       <input type="text" formControlName="username" data-testid="input-username" />
     </label>
   </div>
   <br />
   <div>
-    <label>
+    <label class="field-row">
       Password:&nbsp;
       <input type="password" formControlName="password" data-testid="input-password" />
     </label>
   </div>
+  <br />
   <br />
   <button type="submit" [disabled]="!loginForm.valid || fetching()"
     data-testid="btn-login">{{ fetching() ? 'Validating...' : 'Login' }}</button>
