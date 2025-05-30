@@ -1,6 +1,11 @@
 <h1 data-testid="title-posts">{{ title() }}</h1>
-@if (postsList$ | async; as postsList) {
-  @for (post of postsList.posts; track post) {
+
+@let postsList = postsList$ | async;
+
+@if (postsList?.posts?.length) {
+  <p>Total: {{ postsList!.total }}</p>
+
+  @for (post of postsList!.posts; track post) {
     <div>
       <h3 data-testid="title-post">
         <a [routerLink]="['/', post.id]" [state]="{ backPageTitle: title(), backLink: routeUrl }"

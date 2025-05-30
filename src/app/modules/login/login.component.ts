@@ -1,9 +1,9 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize, take } from 'rxjs';
 
-import { AuthService } from 'app/services';
+import { AuthService, UserService } from 'app/services';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +12,8 @@ import { AuthService } from 'app/services';
   imports: [ReactiveFormsModule]
 })
 export class LoginComponent {
+  private readonly userService = inject(UserService);
+
   errorMessage = signal<string | null>(null);
   loginForm: FormGroup;
   fetching = signal(false);
@@ -45,6 +47,18 @@ export class LoginComponent {
           this.router.navigateByUrl('/my-posts');
         },
         error: (error: Error) => this.errorMessage.set(error.message)
+      });
+  }
+
+  prefillAndLogin(role: 'admin' | 'user' = 'user'): void {
+    this.userService.filterUsers('role', role).pipe(take(1))
+      .subscribe(list => {
+        const randomUser = list.users[Math.floor(Math.random() * list.users.length)];
+        this.loginForm.setValue({
+          username: randomUser.username,
+          password: randomUser.password
+        });
+        this.loginUser();
       });
   }
 }

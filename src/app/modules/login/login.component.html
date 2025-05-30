@@ -23,4 +23,10 @@
   <br />
   <button type="submit" [disabled]="!loginForm.valid || fetching()"
     data-testid="btn-login">{{ fetching() ? 'Validating...' : 'Login' }}</button>
+  <br />
+  <br />
+  <hr />
+  <br />
+  <button type="button" (click)="prefillAndLogin('admin')">Use a Admin Login</button>&nbsp;&nbsp;
+  <button type="button" (click)="prefillAndLogin()">Use a User Login</button>
 </form>

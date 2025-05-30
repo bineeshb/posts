@@ -12,3 +12,10 @@ export interface User {
   image: string;
   role: string;
 }
+
+export interface UserList {
+  limit: number;
+  skip: number;
+  total: number;
+  users: User[];
+}
